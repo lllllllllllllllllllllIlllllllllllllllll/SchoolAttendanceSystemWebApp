@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Prototype.Models.Classrooms>
+
+@{
+    ViewData["Title"] = "Classroom";
+}
+
+<h1>Classroom</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QrCode)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QrCode)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.RoomId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.RoomId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.RoomId">Delete</a> |
+                <a asp-action="Qrcode" asp-route-id="@item.QrCode">Generate QR Code</a>
+            </td>
+        </tr>
+}
+
+    </tbody>
+</table>
+
