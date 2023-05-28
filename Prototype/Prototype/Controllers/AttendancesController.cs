@@ -19,49 +19,6 @@ namespace Prototype.Controllers
             _context = context;
         }
 
-		/*
-		[HttpGet("{AttendanceId}/{Date}/{Status}/{StudentId}")]
-		public IActionResult QrScan([Bind("AttendanceId,Date,Status,StudentId")] Attendances attendances)
-        {
-            if (ModelState.IsValid)
-            {
-				_context.Add(attendances);
-				_context.SaveChangesAsync();
-				return RedirectToAction(nameof(Index));
-			}
-			return View(attendances);
-		}
-        */
-		// POST: api/students?date=2022-10-31&status=active&studentid=123
-		public IActionResult Qrscan(Attendances attendance)
-		{
-            ViewBag.AttendanceId = attendance.AttendanceId;
-            ViewBag.Date = attendance.Date;
-            ViewBag.Status = attendance.Status;
-            ViewBag.StudentId = attendance.StudentId;
-
-
-            return View();
-		}
-
-		[HttpPost]
-		public IActionResult Qrscan(DateTime date, string status, int studentid)
-		{
-            // create a new Student object using the params passed in [2:31 AM]
-            Attendances attendance = new Attendances
-            {
-                AttendanceId = 2,
-	            Date = date,
-	            Status = status,
-	            StudentId = studentid
-            };
-
-			_context.Attendances.Add(attendance); // add the new student object to the DbContext
-			_context.SaveChanges(); // save changes to the database
-
-			return View(attendance);
-		}
-
 		// GET: Attendances
 		public async Task<IActionResult> Index()
         {
