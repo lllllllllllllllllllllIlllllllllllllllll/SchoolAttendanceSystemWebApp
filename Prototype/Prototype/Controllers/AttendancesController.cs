@@ -19,8 +19,8 @@ namespace Prototype.Controllers
             _context = context;
         }
 
-		// GET: Attendances
-		public async Task<IActionResult> Index()
+        // GET: Attendances
+        public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Attendances.Include(a => a.Students);
             return View(await applicationDbContext.ToListAsync());
@@ -120,6 +120,26 @@ namespace Prototype.Controllers
             }
             ViewData["StudentId"] = new SelectList(_context.Students, "StudentId", "Name", attendances.StudentId);
             return View(attendances);
+        }
+
+        [HttpPost]
+        public JsonResult postFunction([FromBody] TestModel testModel)
+        {
+            var model = testModel;
+            return Json(new { success = true, result = model.AttendanceId + model.StudentId + model.Date.ToString() + model.Status });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddAttendance([FromBody] Attendances attendance)
+        {
+            var test = attendance;
+            if (ModelState.IsValid)
+            {
+                _context.Add(attendance);
+                await _context.SaveChangesAsync();
+            }
+            ViewData["StudentId"] = new SelectList(_context.Students, "StudentId", "Name", test.StudentId);
+            return View(attendance);
         }
 
         // GET: Attendances/Delete/5
