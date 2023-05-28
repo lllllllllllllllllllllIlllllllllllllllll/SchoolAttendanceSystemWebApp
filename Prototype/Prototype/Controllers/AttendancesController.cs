@@ -123,23 +123,16 @@ namespace Prototype.Controllers
         }
 
         [HttpPost]
-        public JsonResult postFunction([FromBody] TestModel testModel)
-        {
-            var model = testModel;
-            return Json(new { success = true, result = model.AttendanceId + model.StudentId + model.Date.ToString() + model.Status });
-        }
-
-        [HttpPost]
         public async Task<IActionResult> AddAttendance([FromBody] Attendances attendance)
         {
-            var test = attendance;
             if (ModelState.IsValid)
             {
                 _context.Add(attendance);
                 await _context.SaveChangesAsync();
             }
-            ViewData["StudentId"] = new SelectList(_context.Students, "StudentId", "Name", test.StudentId);
-            return View(attendance);
+            ViewData["StudentId"] = new SelectList(_context.Students, "StudentId", "Name", attendance.StudentId);
+            return Json(new { success = true, result = "Student " + attendance.StudentId + " has been marked " + 
+                attendance.Status });
         }
 
         // GET: Attendances/Delete/5
